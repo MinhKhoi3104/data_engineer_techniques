@@ -149,6 +149,16 @@ def scd_type_4_demo(etl_date=None):
 
         # Thực hiện đẩy dữ liệu mới vào bảng target theo SCD 4
         try:
+            # Ghi dữ liệu vào bảng His
+            old_records_df.write \
+                .format("jdbc") \
+                .mode("append") \
+                .option("url", JDBC_URL_POSTGRES["url"]) \
+                .option("dbtable", "e_commerce.customer_dim_his_scd4") \
+                .options(**JDBC_URL_POSTGRES["properties"]) \
+                .save()
+            print(f"✅ Ghi dữ liệu thành công vào bảng e_commerce.customer_dim_his_scd4.")
+
             # Đẩy dữ liệu mới vài bảng target temp
             new_target_df.write \
                 .format("jdbc") \
@@ -186,15 +196,7 @@ def scd_type_4_demo(etl_date=None):
                 raise Exception("SQL Error: Lệnh INSERT INTO SELECT thất bại.")
             print(f"✅ Ghi dữ liệu thành công vào bảng e_commerce.customer_dim_scd4.")
 
-            # Ghi dữ liệu vào bảng His
-            old_records_df.write \
-                .format("jdbc") \
-                .mode("append") \
-                .option("url", JDBC_URL_POSTGRES["url"]) \
-                .option("dbtable", "e_commerce.customer_dim_his_scd4") \
-                .options(**JDBC_URL_POSTGRES["properties"]) \
-                .save()
-            print(f"✅ Ghi dữ liệu thành công vào bảng e_commerce.customer_dim_his_scd4.")
+
 
         except Exception as e:
             print(f"❌ Ghi dữ liệu thất bại!")
