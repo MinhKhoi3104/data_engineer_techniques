@@ -7,4 +7,5 @@
 ![databse_connection](./image/database_connection.png)
 ### Bước 6: chạy các file SCD (nhập cú pháp vào terminal: python + tên đường dẫn file python + --etl_date + ngày). Ví dụ: python /home/minhkhoi/khoidata/Github/data_engineer_techniques/SCD_demo/SCD1.py --etl_date 20251130 (nếu không để etl_date thì sẽ lấy auto là today())
 ### Bước 7: chạy các câu lệnh DML trong file scd_test_case.sql trong DBeaver.
-### Bước 8: Chạy lại các file SCD (đổi etl_date thành 1 ngày mới) để thấy được cách hoạt động của từng SCD.
+### Bước 8: Chạy lại các file SCD (đổi etl_date thành 1 ngày mới) sau đó vào BDeaver vào các table dim mới tạo để thấy được cách hoạt động của từng SCD.
+![after_run_code_scd](./image/after_run_code_scd.png)
