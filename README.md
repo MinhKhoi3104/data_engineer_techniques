@@ -21,7 +21,7 @@
 ### 📝 Khái niệm: 
 - Luồng dữ liệu (Data Pipeline) là một hệ thống hoặc chuỗi các tiến trình tự động được thiết lập để di chuyển, chuyển đổi (transform) và tải (load) dữ liệu từ các hệ thống nguồn đến một kho lưu trữ đích (như Data Warehouse, Data Lake), nhằm mục đích chuẩn bị dữ liệu cho việc phân tích, báo cáo, và các ứng dụng Machine Learning.
 
-![data_pipeline](/image/data_pipeline.jpeg)
+![data_pipeline](/image/data_pipeline.jpg)
 
 ### 🔎 Phân tích Các Layer (Layered Architecture)
 | No | Layer Name | Main function |
