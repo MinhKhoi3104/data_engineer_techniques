@@ -34,12 +34,42 @@
 ***
 
 ## 3️⃣ Apache Iceberg:
-#### ***(đang cập nhật)*** 
 ### 📝 Khái niệm:
 - Apache Iceberg là 1 định dạng bảng dữ liệu phân tán, giúp đơn giản hóa việc xử lý dữ liệu trên các tập dữ liệu lớn được lưu trữ trong các kho dữ liệu.
-
+- Cấu trúc quản lý dữ liệu bảng Apache Iceberg:
+```
+Iceberg Table (Bảng Iceberg)
+├── Catalog / Metastore (Danh mục / Kho siêu dữ liệu)
+|   └── Trỏ đến Metadata File hiện tại (Current Metadata File Pointer)
+|
+├── Metadata Files (Các tệp Siêu dữ liệu) - Mỗi phiên bản bảng có một tệp
+|   ├── Snapshot History (Lịch sử Ảnh chụp)
+|   ├── Schema (Lược đồ)
+|   ├── Partition Specification (Đặc tả Phân vùng)
+|   └── Snapshot (Ảnh chụp) - Trạng thái của bảng tại một thời điểm
+|       ├── Snapshot ID
+|       ├── Manifest List (Danh sách Tệp Manifest) - Trỏ đến các Manifest File
+|       |   ├── Manifest File (Tệp Manifest) - Chứa danh sách Data Files
+|       |   |   ├── Data File Entry 1 (Mục Tệp Dữ liệu)
+|       |   |   |   ├── File Path (Đường dẫn Tệp)
+|       |   |   |   ├── File Format (Định dạng Tệp: Parquet, ORC, Avro)
+|       |   |   |   └── Partition Data (Dữ liệu Phân vùng)
+|       |   |   ├── Data File Entry 2
+|       |   |   └── ...
+|       |   └── Manifest File ...
+|       └── Manifest List ...
+|
+└── Data Files (Các Tệp Dữ liệu) - Dữ liệu thực tế được lưu trữ
+    ├── Partition A
+    |   └── data_file_1.parquet
+    |   └── data_file_2.orc
+    └── Partition B
+        └── data_file_3.parquet
+        └── ...
+```
+- Lưu ý: Phần demo bên dưới Catalog Metadata được lưu vào schema mặc định (public) trong postgreSQL. Các Data Files và Metadata Files được lưu vào folder iceberg-warehouse
 #### **Xem thêm lý thuyết về Iceberg (định nghĩa, cấu trúc quản lý của dữ liệu bảng Iceberg,...):** ***[Chi tiết lý thuyết về Apache IceBerg](https://docs.google.com/document/d/1Y8w0AFGf5DL2vO3uhZEdpwIbg7wc5RlpXnPq2rq10Fs/edit?usp=sharing)***
-### 📌 Source Code Demo ứng dụng Apache Iceberg: ***(đang cập nhật)*** ***[Iceberg Demo Code](./CDC_demo)***
+### 📌 Source Code Demo ứng dụng Apache Iceberg: ***(ứng dụng trong tầng cur của data pipeline demo)*** ***[Iceberg Demo Code](./data_pipeline_demo/_03_cur/_0301_customer_dim_merge.py)***
 ***
 
 ## 4️⃣ Build data pipeline:
