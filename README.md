@@ -69,7 +69,7 @@ Iceberg Table (Bảng Iceberg)
 ```
 - Lưu ý: Phần demo bên dưới Catalog Metadata được lưu vào schema mặc định (public) trong postgreSQL. Các Data Files và Metadata Files được lưu vào folder iceberg-warehouse
 #### **Xem thêm lý thuyết về Iceberg (định nghĩa, cấu trúc quản lý của dữ liệu bảng Iceberg,...):** ***[Chi tiết lý thuyết về Apache IceBerg](https://docs.google.com/document/d/1Y8w0AFGf5DL2vO3uhZEdpwIbg7wc5RlpXnPq2rq10Fs/edit?usp=sharing)***
-### 📌 Source Code Demo ứng dụng Apache Iceberg: ***(ứng dụng trong tầng cur của data pipeline demo)*** ***[Iceberg Demo Code](./data_pipeline_demo/_03_cur/_0301_customer_dim_merge.py)***
+### 📌 Source Code Demo ứng dụng Apache Iceberg: ***(ứng dụng trong tầng cur và dmt của data pipeline demo)*** ***[Iceberg Demo Code](./data_pipeline_demo/)***
 ***
 
 ## 4️⃣ Build data pipeline:
