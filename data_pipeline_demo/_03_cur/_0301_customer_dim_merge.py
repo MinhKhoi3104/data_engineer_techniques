@@ -21,6 +21,7 @@ def _0301_customer_dim_merge(etl_date=None):
         spark.sql("CREATE NAMESPACE IF NOT EXISTS cur")
         
         # Tạo bảng target nếu chưa tồn tại trong iceberg
+        spark.sql("""drop table if exists jdbciceberg.cur.customer""")
         spark.sql("""
             CREATE TABLE IF NOT EXISTS jdbciceberg.cur.customer(
             customer_id int, -- ID
