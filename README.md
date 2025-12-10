@@ -1,5 +1,7 @@
 # Data Engineer Technique
 ## 📄 Mục lục
+[0️⃣ Hướng dẫn chạy code Demo:](how_to_run_code.md)
+
 [1️⃣ SCD (Slowly Changing Dimention):](#1️⃣-scd-slowly-changing-dimention)
 
 [2️⃣ CDC (Change Data Capture):](#2️⃣-cdc-change-data-capture)
@@ -21,8 +23,6 @@
 #### **Xem thêm lý thuyết về các loại SCD (nguyên lý hoạt động, ưu điểm và nhược điểm):** ***[Chi tiết các loại SCD](https://docs.google.com/document/d/1Y8w0AFGf5DL2vO3uhZEdpwIbg7wc5RlpXnPq2rq10Fs/edit?usp=sharing)***
 
 ### 📌 Source Code Demo các loại SCD: ***[SCD Demo Code](./SCD_demo)***
-
-### 📌 Hướng dẫn chạy các code SCD demo: ***[Run_code_tutorial](./how_to_run_code.md)***
 ***
 
 ## 2️⃣ CDC (Change Data Capture):
