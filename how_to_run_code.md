@@ -14,5 +14,5 @@
 ## 📌 Đối với Demo Build Data Pipeline
 ### Thực hiện giống phía trên từ bước 1 -> 5
 ### Bước 6: Chạy các file etl tại các tầng (chạy theo pipeline stg -> prc -> cur -> dmt) (nhập cú pháp vào terminal: python + tên đường dẫn file python + --etl_date + ngày). Ví dụ: python python ./data_pipeline_demo/_01_stg/_0101_customer_overwirte.py --etl_date 20251130 (nếu không để etl_date thì sẽ lấy auto là today())
-### Bước 7: Vào DBeaver để kiểm tra dữ liệu được load vào chưa. (Lưu ý: khi chạy tới tầng cur và dmt có ứng dụng iceberg-warehouse thì sau khi chạy vào folder iceberg để theo dõi)
+### Bước 7: Vào DBeaver để kiểm tra dữ liệu được load vào chưa. (ưu ý: Phần demo ở tầng cur và dmt có ứng dụng Iceberg phần Catalog Metadata được lưu vào schema mặc định (public) trong postgreSQL. Còn Data Files và Metadata Files được lưu vào folder iceberg-warehouse, có thể chọn để xem)
 ![run_pipe_result](./image/run_pipe_result.png)
