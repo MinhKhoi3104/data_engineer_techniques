@@ -22,7 +22,7 @@ def _0401_customer_dim(etl_date=None):
         # Tạo bảng target nếu chưa tồn tại trong iceberg
         spark.sql("""drop table if exists jdbciceberg.dmt.customer""")
         spark.sql("""
-            CREATE TABLE IF NOT EXISTS jdbciceberg.cur.customer(
+            CREATE TABLE IF NOT EXISTS jdbciceberg.dmt.customer(
             customer_id int, -- ID
             customer_name VARCHAR(100), -- Tên 
             customer_birth DATE,              -- Ngày tháng năm sinh
@@ -72,13 +72,80 @@ def _0401_customer_dim(etl_date=None):
         source_df = spark.read.format("iceberg").load("jdbciceberg.cur.customer")
 
         # Lấy dữ liệu target tầng dmt
-        target_df = spark.read.format("iceberg").load("jdbciceberg.cur.customer")
+        target_df = spark.read.format("iceberg").load("jdbciceberg.dmt.customer")
 
         # Thực hiện ETL
         """Tại tầng DMT chúng ta sẽ thực hiện ETL ra các bảng Fact và các bảng Dim"""
         """Việc ETL tại tầng này sẽ tùy thuộc vào nghiệp vụ mà etl ra các table phục vụ phù hợp"""
         """Phần code phía dưới chỉ xử etl minh họa, được sử lý theo SCD Type 1 và có dùng Iceberg"""
 
+        cols = [col for col in target_df.columns if col not in ("etl_date","is_active")]
+        ### Lọc ra dữ liệu insert và update
+        insert_update_df = \
+            source_df.select(cols).subtract(target_df.select(cols))
+        
+        insert_update_df = \
+            insert_update_df\
+                .withColumn("is_active",lit("1"))\
+                .withColumn("etl_date", to_date(lit(etl_date), "yyyyMMdd"))
+        
+        ### Lọc dữ liệu bị delete
+        delete_df = \
+            target_df.select(cols).alias("t")\
+            .join(source_df.alias("s"), col("t.customer_id") == col("s.customer_id"), "left_anti")\
+            .select("t.*")
+        
+        delete_df = \
+            delete_df\
+                .withColumn("is_active",lit("0"))\
+                .withColumn("etl_date", to_date(lit(etl_date), "yyyyMMdd"))
+
+        
+        # Dữ liệu thay đổi là
+        customer_diff_df = insert_update_df.union(delete_df)
+
+        if customer_diff_df.count() > 0:
+            print(f"Số dữ liệu cần inser_update: {customer_diff_df.count()}")
+            customer_diff_df.show(10, truncate=False)
+            # Tạo view tạm cho bảng customer_diff_df
+            customer_diff_df.createOrReplaceTempView("customer_diff_df")
+            spark.sql("""
+            MERGE INTO jdbciceberg.dmt.customer AS tgt
+            USING customer_diff_df AS src
+                on tgt.customer_id = src.customer_id
+            WHEN MATCHED THEN 
+                UPDATE SET
+                    tgt.customer_name = src.customer_name,
+                    tgt.customer_birth = src.customer_birth,
+                    tgt.customer_hometown = src.customer_hometown,
+                    tgt.customer_phone_num = src.customer_phone_num,
+                    tgt.customer_email = src.customer_email,
+                    tgt.customer_source = src.customer_source,
+                    tgt.customer_gender = src.customer_gender,
+                    tgt.is_active = src.is_active,
+                    tgt.etl_date = src.etl_date
+            WHEN NOT MATCHED THEN
+                INSERT (tgt.customer_id, tgt.customer_name, tgt.customer_birth, tgt.customer_hometown, tgt.customer_phone_num, 
+                    tgt.customer_email, tgt.customer_source, tgt.customer_gender, tgt.is_active, tgt.etl_date) 
+                VALUES (src.customer_id, src.customer_name, src.customer_birth, src.customer_hometown, src.customer_phone_num, 
+                    src.customer_email, src.customer_source, src.customer_gender, src.is_active,src.etl_date)
+            """)
+        
+            print("✅ Đã ghi dữ liệu thành công vào jdbciceberg.dmt.customer")
+
+            new_target_df = spark.read.format("iceberg").load("jdbciceberg.dmt.customer")
+            # Đưa dữ liệu về postgresql
+            new_target_df.write \
+                .format("jdbc") \
+                .mode("overwrite") \
+                .option("url", JDBC_URL_POSTGRES["url"]) \
+                .option("dbtable", "dmt.customer_dim") \
+                .options(**JDBC_URL_POSTGRES["properties"]) \
+                .save()
+            print(f"✅ Ghi dữ liệu thành công vào bảng dmt.customer")
+
+        else: 
+            print("Không có bản ghi nào cần thực hiện Insert hoặc Update")
 
         return True
     except Exception as e:

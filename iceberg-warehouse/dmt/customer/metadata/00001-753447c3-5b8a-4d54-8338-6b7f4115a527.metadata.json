@@ -1,0 +1,117 @@
+{
+  "format-version" : 2,
+  "table-uuid" : "c3c976a2-0381-48f1-82de-d6cf4b9963e8",
+  "location" : "file:///home/minhkhoi/khoidata/Github/data_engineer_techniques/_002_utils/../iceberg-warehouse/dmt/customer",
+  "last-sequence-number" : 1,
+  "last-updated-ms" : 1765357219610,
+  "last-column-id" : 10,
+  "current-schema-id" : 0,
+  "schemas" : [ {
+    "type" : "struct",
+    "schema-id" : 0,
+    "fields" : [ {
+      "id" : 1,
+      "name" : "customer_id",
+      "required" : false,
+      "type" : "int"
+    }, {
+      "id" : 2,
+      "name" : "customer_name",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 3,
+      "name" : "customer_birth",
+      "required" : false,
+      "type" : "date"
+    }, {
+      "id" : 4,
+      "name" : "customer_hometown",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 5,
+      "name" : "customer_phone_num",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 6,
+      "name" : "customer_email",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 7,
+      "name" : "customer_source",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 8,
+      "name" : "customer_gender",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 9,
+      "name" : "is_active",
+      "required" : false,
+      "type" : "string"
+    }, {
+      "id" : 10,
+      "name" : "etl_date",
+      "required" : false,
+      "type" : "date"
+    } ]
+  } ],
+  "default-spec-id" : 0,
+  "partition-specs" : [ {
+    "spec-id" : 0,
+    "fields" : [ ]
+  } ],
+  "last-partition-id" : 999,
+  "default-sort-order-id" : 0,
+  "sort-orders" : [ {
+    "order-id" : 0,
+    "fields" : [ ]
+  } ],
+  "properties" : {
+    "owner" : "minhkhoi",
+    "write.parquet.compression-codec" : "zstd"
+  },
+  "current-snapshot-id" : 7171099985117772988,
+  "refs" : {
+    "main" : {
+      "snapshot-id" : 7171099985117772988,
+      "type" : "branch"
+    }
+  },
+  "snapshots" : [ {
+    "sequence-number" : 1,
+    "snapshot-id" : 7171099985117772988,
+    "timestamp-ms" : 1765357219610,
+    "summary" : {
+      "operation" : "overwrite",
+      "spark.app.id" : "local-1765357208062",
+      "added-data-files" : "1",
+      "added-records" : "10",
+      "added-files-size" : "3657",
+      "changed-partition-count" : "1",
+      "total-records" : "10",
+      "total-files-size" : "3657",
+      "total-data-files" : "1",
+      "total-delete-files" : "0",
+      "total-position-deletes" : "0",
+      "total-equality-deletes" : "0"
+    },
+    "manifest-list" : "file:/home/minhkhoi/khoidata/Github/data_engineer_techniques/iceberg-warehouse/dmt/customer/metadata/snap-7171099985117772988-1-13b4610f-57c0-4dba-bcbf-95c437aff8d9.avro",
+    "schema-id" : 0
+  } ],
+  "statistics" : [ ],
+  "partition-statistics" : [ ],
+  "snapshot-log" : [ {
+    "timestamp-ms" : 1765357219610,
+    "snapshot-id" : 7171099985117772988
+  } ],
+  "metadata-log" : [ {
+    "timestamp-ms" : 1765357211564,
+    "metadata-file" : "file:/home/minhkhoi/khoidata/Github/data_engineer_techniques/iceberg-warehouse/dmt/customer/metadata/00000-9ce03ae5-8eec-4079-af00-f6803835b737.metadata.json"
+  } ]
+}
