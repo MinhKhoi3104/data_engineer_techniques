@@ -85,7 +85,7 @@ Iceberg Table (Bảng Iceberg)
 ### 🔎 Phân tích Các Layer (Layered Architecture)
 | No | Layer Name | Main function |
 | :--- | :--- | :--- |
-| 1 | Raw data /Ingestion / Data Source | Nơ lưu trữ dữ liệu tho (raw data) |
+| 1 | Raw data /Ingestion / Data Source | Nơi lưu trữ dữ liệu thô (raw data) |
 | 2 | Staging/ Bronze Layer | Đẩy 1:1 từ nguồn (nguyên vẹn): Dữ liệu được tải về và lưu trữ chính xác như khi lấy từ nguồn (không thực hiện bất kỳ thay đổi nào). |
 | 3 | Processing/ Silver Layer | Làm sạch, Chuẩn hóa, Transform: Xử lý giá trị NULL, loại bỏ trùng lặp, chuẩn hóa kiểu dữ liệu. Đồng thời thực hiện xử lý logic (transform) cho dữ liệu |
 | 4 | Curated / Gold Layer | Chuyển đổi Hoàn toàn & Áp dụng Logic Nghiệp vụ: Liên kết các bảng, tính toán chỉ số, áp dụng SCD. |
